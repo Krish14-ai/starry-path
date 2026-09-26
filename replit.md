@@ -4,6 +4,12 @@
 
 Orbit is a recovery companion web application designed to help users track their progress in overcoming addictive behaviors. The app features a gentle onboarding flow, daily check-ins, streak tracking with gamification (orbs), a community support section, educational lessons, and a coach messaging feature. The application uses a dark, space-themed UI with glassmorphism design elements.
 
+## Running on Replit
+
+- Install dependencies with `npm install` if they are not installed.
+- Run the existing **Start application** workflow (`npm run dev`), which serves the client and API on port 5000.
+- No database or additional secret is required for the current in-memory implementation. Server data resets on restart. PostgreSQL schema commands such as `npm run db:push` require `DATABASE_URL`, but the app does not currently use PostgreSQL for storage.
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.

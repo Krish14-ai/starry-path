@@ -83,6 +83,7 @@ export const coachMessages = pgTable("coach_messages", {
 
 export const insertCoachMessageSchema = createInsertSchema(coachMessages).omit({ id: true, createdAt: true });
 export type CoachMessage = typeof coachMessages.$inferSelect;
+export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type Checkin = typeof checkins.$inferSelect;
 export type InsertCheckin = z.infer<typeof insertCheckinSchema>;

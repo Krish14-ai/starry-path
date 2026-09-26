@@ -28,17 +28,12 @@ A full-stack web application that helps users track progress in overcoming addic
 # Install dependencies
 npm install
 
-# Set up environment
-cp .env.example .env   # add your DATABASE_URL
-
-# Push the database schema
-npm run db:push
-
 # Start development (client + server)
 npm run dev
 ```
 
 The app runs on `http://localhost:5000` in development.
+The current server uses in-memory storage, so no database is needed to run it. Data resets whenever the server restarts. `npm run db:push` is only for setting up the PostgreSQL schema and requires a `DATABASE_URL`; it does not switch the app to persistent storage.
 
 ## 📁 Project Structure
 
