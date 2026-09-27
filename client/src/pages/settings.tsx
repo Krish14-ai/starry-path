@@ -20,6 +20,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
+import { useContentShield } from "@/lib/content-shield";
 
 const PROFILE_KEY = "orbit:profile";
 const DNS_PENDING_KEY = "orbit:dns-protection-pending";
@@ -80,6 +81,7 @@ function deviceSettingsLink(device: Device) {
 
 export default function Settings() {
   const [, navigate] = useLocation();
+  const { isActive: isContentShieldActive, engage, disengage } = useContentShield();
   const [profile, setProfile] = useState<Profile>(() => readProfile());
   const [showSetup, setShowSetup] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -227,6 +229,38 @@ export default function Settings() {
                   <ChevronRight className="h-4 w-4" aria-hidden="true" />
                 </Button>
               )}
+            </div>
+
+            <div
+              className="mt-4 flex flex-col gap-4 rounded-[26px] border border-border bg-card p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-6"
+              data-testid="card-in-app-content-shield"
+            >
+              <div className="flex items-start gap-4">
+                <div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-secondary text-primary">
+                  <ShieldCheck className="h-5 w-5" aria-hidden="true" />
+                </div>
+                <div>
+                  <h3 className="text-base font-semibold tracking-tight">In-App Content Shield</h3>
+                  <p className="mt-1 max-w-lg text-sm leading-6 text-muted-foreground">
+                    Instantly pauses outbound links and external previews while you use Orbit.
+                  </p>
+                  <p
+                    className="mt-2 text-xs font-medium text-primary"
+                    data-testid="text-in-app-shield-status"
+                  >
+                    {isContentShieldActive ? "On now" : "Off"}
+                  </p>
+                </div>
+              </div>
+              <Button
+                type="button"
+                variant={isContentShieldActive ? "outline" : "default"}
+                className="min-h-11 shrink-0 rounded-xl"
+                onClick={isContentShieldActive ? disengage : engage}
+                data-testid="button-in-app-content-shield"
+              >
+                {isContentShieldActive ? "Turn off shield" : "Turn on shield"}
+              </Button>
             </div>
           </section>
         </div>
