@@ -3,6 +3,7 @@ import { useLocation } from "wouter";
 import {
   Sparkles,
   ShieldAlert,
+  ShieldCheck,
   Flame,
   Gem,
   CalendarCheck,
@@ -364,22 +365,19 @@ export default function Home() {
                   >
                     Open Panic Button
                   </button>
-                  <div
-                    className="mt-4 text-xs text-[#69443a]"
-                    aria-live="polite"
-                    data-testid="text-content-shield-status-home"
-                  >
-                    Content Shield: {isContentShieldActive ? "On" : "Off"}
+                  <div className="mt-3 flex justify-end">
+                    <button
+                      type="button"
+                      className="inline-flex min-h-8 items-center gap-1.5 rounded-full border border-[#6f8f7a] bg-transparent px-3 py-1.5 text-xs font-semibold text-[#587762] transition-colors hover:bg-[#6f8f7a]/10 btn-press"
+                      onClick={isContentShieldActive ? disengage : engage}
+                      aria-pressed={isContentShieldActive}
+                      aria-live="polite"
+                      data-testid="button-content-shield-home"
+                    >
+                      <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
+                      Shield: {isContentShieldActive ? "On" : "Off"}
+                    </button>
                   </div>
-                  <button
-                    type="button"
-                    className="min-tap mt-2 w-full rounded-xl border border-[#6f8f7a] bg-[#6f8f7a] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#587762] btn-press"
-                    onClick={isContentShieldActive ? disengage : engage}
-                    aria-pressed={isContentShieldActive}
-                    data-testid="button-content-shield-home"
-                  >
-                    {isContentShieldActive ? "Turn off Shield" : "Turn on Shield"}
-                  </button>
                   {panicStats.urgesResisted > 0 && (
                     <div className="mt-4 flex items-center justify-between border-t border-[#d9b9aa] pt-4 text-xs text-[#69443a]">
                       <span className="inline-flex items-center gap-2">
