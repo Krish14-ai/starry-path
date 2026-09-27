@@ -3,6 +3,7 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { ContentShieldProvider } from "@/lib/content-shield";
 import NotFound from "@/pages/not-found";
 import Welcome from "@/pages/welcome";
 import Onboarding from "@/pages/onboarding";
@@ -19,6 +20,7 @@ import FocusButton from "@/pages/focus";
 import FocusAnalytics from "@/pages/focus-analytics";
 import SeedGarden from "@/pages/garden/index";
 import GrowthTimeline from "@/pages/garden/timeline";
+import Settings from "@/pages/settings";
 
 function Router() {
   return (
@@ -39,6 +41,7 @@ function Router() {
       <Route path="/focus-analytics" component={FocusAnalytics} />
       <Route path="/garden" component={SeedGarden} />
       <Route path="/timeline" component={GrowthTimeline} />
+      <Route path="/settings" component={Settings} />
 
       <Route component={NotFound} />
     </Switch>
@@ -50,7 +53,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        <Router />
+        <ContentShieldProvider>
+          <Router />
+        </ContentShieldProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

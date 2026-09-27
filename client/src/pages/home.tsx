@@ -533,7 +533,7 @@ export default function Home() {
               <button
                 type="button"
                 className="group rounded-2xl border border-border bg-card p-5 text-left transition-all hover:-translate-y-0.5 hover:border-primary/50 hover:bg-secondary btn-press min-tap"
-                onClick={() => alert("Profile UI only (prototype).")}
+                onClick={() => navigate("/settings")}
                 data-testid="button-profile"
               >
                 <div className="grid h-10 w-10 place-items-center rounded-xl bg-secondary text-muted-foreground">

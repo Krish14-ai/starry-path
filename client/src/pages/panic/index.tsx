@@ -9,6 +9,7 @@ import {
   CheckCircle2,
   ChevronRight,
   ShieldAlert,
+  ShieldCheck,
   RotateCcw,
   Zap,
   Play,
@@ -22,8 +23,10 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useContentShield } from "@/lib/content-shield";
 
 const PANIC_STORAGE_KEY = "orbit:panic_v1";
+const PROFILE_KEY = "orbit:profile";
 const STREAK_KEY = "orbit:streak";
 const ORBS_KEY = "orbit:orbs";
 
@@ -50,11 +53,23 @@ const NEED_SUGGESTIONS: Record<string, string> = {
   Relief: "The urge is a false promise of relief. Try 2 minutes of stretching instead."
 };
 
+function loadDnsProtectionEnabled() {
+  try {
+    const raw = localStorage.getItem(PROFILE_KEY);
+    const profile = raw ? JSON.parse(raw) : {};
+    return profile.dnsProtectionEnabled === true;
+  } catch {
+    return false;
+  }
+}
+
 export default function PanicButton() {
   const [, navigate] = useLocation();
+  const { isActive: isContentShieldActive, engage, disengage } = useContentShield();
   const [step, setStep] = useState(0); // 0: Start, 1: Breathe, 2: Delay/Replace, 3: Success
   const [urgeLevel, setUrgeLevel] = useState(5);
   const [selectedTriggers, setSelectedTriggers] = useState<string[]>([]);
+  const [dnsProtectionEnabled] = useState(loadDnsProtectionEnabled);
   
   // Breathe state
   const [breathTimer, setBreathTimer] = useState(60);
@@ -68,6 +83,10 @@ export default function PanicButton() {
   const [selectedNeed, setSelectedNeed] = useState<string | null>(null);
 
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    return () => disengage();
+  }, [disengage]);
 
   // Breathing Logic
   useEffect(() => {
@@ -108,6 +127,12 @@ export default function PanicButton() {
   const handleStartRescue = () => {
     setStep(1);
     setIsBreathing(true);
+    engage();
+  };
+
+  const handleSkipToBreathing = () => {
+    setStep(1);
+    engage();
   };
 
   const handleCompleteRescue = () => {
@@ -263,7 +288,7 @@ export default function PanicButton() {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                   <button 
-                    onClick={() => setStep(1)}
+                    onClick={handleSkipToBreathing}
                     className="w-full py-2 text-[10px] font-black text-white/30 uppercase tracking-[0.4em] hover:text-white/50 transition active:scale-95"
                   >
                     Skip to breathing
@@ -288,6 +313,20 @@ export default function PanicButton() {
                      urgeLevel >= 4 ? "Strong wave detected. Breathe through the peak." : 
                      "A passing wave. Let your breath carry it away."}
                   </p>
+                   {isContentShieldActive && (
+                     <div
+                       className="mx-2 flex items-start gap-3 rounded-2xl border border-cyan-500/20 bg-cyan-500/5 p-4 text-left"
+                       data-testid="card-content-shield-active"
+                     >
+                       <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" aria-hidden="true" />
+                       <div>
+                         <p className="text-xs font-bold text-cyan-300">Content Shield is on</p>
+                         <p className="mt-1 text-[11px] leading-5 text-white/45">
+                           Orbit has paused outbound links and external previews while you work through this urge.
+                         </p>
+                       </div>
+                     </div>
+                   )}
                 </div>
 
                 <div className="flex-1 flex flex-col items-center justify-center py-10 relative">
@@ -371,6 +410,36 @@ export default function PanicButton() {
                   <h1 className="text-2xl font-bold text-white font-[var(--font-serif)] tracking-tight">Override the Impulse</h1>
                   <p className="text-xs text-white/40">Urges last 15-30 mins. We only need to bridge the gap.</p>
                 </div>
+
+                 {!dnsProtectionEnabled && (
+                   <Card
+                     className="glass bg-white/5 border-white/10 p-4 rounded-2xl"
+                     data-testid="card-stronger-protection"
+                   >
+                     <div className="flex items-start gap-3">
+                       <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-amber-300" aria-hidden="true" />
+                       <div className="min-w-0 flex-1">
+                         <p className="text-sm font-bold text-white">Want stronger protection?</p>
+                         <p className="mt-1 text-[11px] leading-5 text-white/45">
+                           You can add a device-level filter from your settings. It is optional and won’t interrupt this rescue.
+                         </p>
+                         <p className="mt-3 text-[10px] leading-4 text-white/35">
+                           Orbit guides you to enable device-level protection in one tap; full automatic enforcement requires a native app, on our roadmap post-hackathon.
+                         </p>
+                         <Button
+                           type="button"
+                           variant="outline"
+                           className="mt-3 min-h-9 border-white/15 bg-white/5 px-3 text-[11px] font-bold text-white/75"
+                           onClick={() => navigate("/settings")}
+                           data-testid="button-stronger-protection"
+                         >
+                           Set up protection
+                           <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
+                         </Button>
+                       </div>
+                     </div>
+                   </Card>
+                 )}
 
                 <div className="flex-1 overflow-y-auto no-scrollbar space-y-5 pr-1 py-2">
                   {/* Card A: Timer */}

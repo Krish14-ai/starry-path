@@ -69,6 +69,9 @@ A messaging interface for talking through hard moments with a coach that respond
 ### 9. Panic Button
 One tap during a strong urge opens an immediate rescue flow with breathing exercises and grounding tools.
 
+### 10. Protection with clear boundaries
+During panic mode, Orbit immediately enables an in-app Content Shield that pauses outbound links and external previews while the user works through an urge. Orbit guides you to enable device-level protection in one tap; full automatic enforcement requires a native app, on our roadmap post-hackathon.
+
 ---
 
 ## The Design
