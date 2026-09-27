@@ -74,7 +74,6 @@ export default function PanicButton() {
   // Breathe state
   const [breathTimer, setBreathTimer] = useState(60);
   const [isBreathing, setIsBreathing] = useState(false);
-  const [breathPhase, setBreathPhase] = useState<"Inhale" | "Hold" | "Exhale">("Inhale");
 
   // Delay state
   const [delayTimer, setDelayTimer] = useState(600);
@@ -98,18 +97,6 @@ export default function PanicButton() {
     } else if (breathTimer === 0) {
       setIsBreathing(false);
     }
-    return () => clearInterval(interval);
-  }, [isBreathing, breathTimer]);
-
-  useEffect(() => {
-    if (!isBreathing) return;
-    const cycle = 12; // 4 + 2 + 6
-    const interval = setInterval(() => {
-      const elapsed = (60 - breathTimer) % cycle;
-      if (elapsed < 4) setBreathPhase("Inhale");
-      else if (elapsed < 6) setBreathPhase("Hold");
-      else setBreathPhase("Exhale");
-    }, 1000);
     return () => clearInterval(interval);
   }, [isBreathing, breathTimer]);
 
@@ -166,6 +153,22 @@ export default function PanicButton() {
     const s = seconds % 60;
     return `${m}:${s.toString().padStart(2, "0")}`;
   };
+
+  const breathVisual = useMemo(() => {
+    const elapsed = (60 - breathTimer) % 16;
+    const segment = Math.min(3, Math.floor(elapsed / 4));
+    const segmentProgress = (elapsed % 4) / 4;
+    const phase = ["INHALE", "HOLD", "EXHALE", "HOLD"][segment];
+
+    const points = [
+      { x: 40, y: 200 - 160 * segmentProgress },
+      { x: 40 + 160 * segmentProgress, y: 40 },
+      { x: 200, y: 40 + 160 * segmentProgress },
+      { x: 200 - 160 * segmentProgress, y: 200 },
+    ];
+
+    return { phase, point: points[segment] };
+  }, [breathTimer]);
 
   return (
     <div className="min-h-dvh app-bg text-foreground flex flex-col overflow-hidden relative">
@@ -330,51 +333,46 @@ export default function PanicButton() {
                 </div>
 
                 <div className="flex-1 flex flex-col items-center justify-center py-10 relative">
-                  <div className="relative w-72 h-72 flex items-center justify-center">
-                    {/* Multi-layered breathing rings */}
-                    <AnimatePresence>
-                      <motion.div 
-                        key={`${breathPhase}-ring-1`}
-                        animate={{ 
-                          scale: breathPhase === "Inhale" ? 1.3 : breathPhase === "Hold" ? 1.3 : 0.7,
-                          opacity: [0.1, 0.2, 0.1]
-                        }}
-                        transition={{ duration: breathPhase === "Inhale" ? 4 : breathPhase === "Hold" ? 2 : 6, ease: "easeInOut" }}
-                        className="absolute inset-0 rounded-full border border-cyan-500/20"
-                      />
-                      <motion.div 
-                        key={`${breathPhase}-ring-2`}
-                        animate={{ 
-                          scale: breathPhase === "Inhale" ? 1.15 : breathPhase === "Hold" ? 1.15 : 0.85,
-                          opacity: [0.05, 0.15, 0.05]
-                        }}
-                        transition={{ duration: breathPhase === "Inhale" ? 4 : breathPhase === "Hold" ? 2 : 6, ease: "easeInOut", delay: 0.2 }}
-                        className="absolute inset-[10%] rounded-full border border-cyan-400/10"
-                      />
-                    </AnimatePresence>
-                    
-                    <motion.div 
-                      animate={{ 
-                        scale: breathPhase === "Inhale" ? 1.2 : breathPhase === "Hold" ? 1.2 : 0.8,
-                        boxShadow: breathPhase === "Inhale" ? "0 0 60px rgba(6,182,212,0.2)" : "0 0 30px rgba(6,182,212,0.1)"
-                      }}
-                      transition={{ duration: breathPhase === "Inhale" ? 4 : breathPhase === "Hold" ? 2 : 6, ease: "easeInOut" }}
-                      className="w-52 h-52 rounded-full border border-white/10 flex flex-col items-center justify-center bg-white/5 backdrop-blur-3xl shadow-2xl z-10 relative overflow-hidden"
+                  <div className="flex w-72 flex-col items-center">
+                    <motion.div
+                      key={breathVisual.phase}
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mb-4 text-xl font-black uppercase tracking-[0.3em] text-cyan-400"
                     >
-                      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent pointer-events-none" />
-                      <motion.span 
-                        key={breathPhase}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="text-xl font-black text-white mb-2 uppercase tracking-[0.3em]"
-                      >
-                        {breathPhase}
-                      </motion.span>
-                      <div className="flex items-baseline gap-1">
-                        <span className="text-5xl font-black text-cyan-400 font-mono tracking-tighter">{breathTimer}</span>
-                        <span className="text-xs font-bold text-white/20 uppercase">sec</span>
-                      </div>
+                      {breathVisual.phase}
                     </motion.div>
+                    <svg
+                      viewBox="0 0 240 240"
+                      className="h-64 w-64 overflow-visible text-cyan-400"
+                      role="img"
+                      aria-label={`Box breathing: ${breathVisual.phase}`}
+                    >
+                      <rect
+                        x="40"
+                        y="40"
+                        width="160"
+                        height="160"
+                        rx="20"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeOpacity="0.45"
+                      />
+                      <motion.circle
+                        r="7"
+                        fill="currentColor"
+                        animate={{
+                          cx: breathVisual.point.x,
+                          cy: breathVisual.point.y,
+                        }}
+                        transition={{ duration: 0.9, ease: "linear" }}
+                      />
+                    </svg>
+                    <div className="mt-1 flex items-baseline gap-1">
+                      <span className="text-5xl font-black text-cyan-400 font-mono tracking-tighter">{breathTimer}</span>
+                      <span className="text-xs font-bold text-white/20 uppercase">sec</span>
+                    </div>
                   </div>
                 </div>
 
