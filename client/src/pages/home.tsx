@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { AppNav } from "@/components/app-nav";
+import { useContentShield } from "@/lib/content-shield";
 
 const ONBOARDING_KEY = "orbit:onboarding";
 const PROFILE_KEY = "orbit:profile";
@@ -50,6 +51,7 @@ function formatDate(iso: string | null) {
 
 export default function Home() {
   const [, navigate] = useLocation();
+  const { isActive: isContentShieldActive, engage, disengage } = useContentShield();
 
   const onboarding = useMemo(() => {
     try {
@@ -361,6 +363,22 @@ export default function Home() {
                     data-testid="button-panic"
                   >
                     Open Panic Button
+                  </button>
+                  <div
+                    className="mt-4 text-xs text-[#69443a]"
+                    aria-live="polite"
+                    data-testid="text-content-shield-status-home"
+                  >
+                    Content Shield: {isContentShieldActive ? "On" : "Off"}
+                  </div>
+                  <button
+                    type="button"
+                    className="min-tap mt-2 w-full rounded-xl border border-[#6f8f7a] bg-[#6f8f7a] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#587762] btn-press"
+                    onClick={isContentShieldActive ? disengage : engage}
+                    aria-pressed={isContentShieldActive}
+                    data-testid="button-content-shield-home"
+                  >
+                    {isContentShieldActive ? "Turn off Shield" : "Turn on Shield"}
                   </button>
                   {panicStats.urgesResisted > 0 && (
                     <div className="mt-4 flex items-center justify-between border-t border-[#d9b9aa] pt-4 text-xs text-[#69443a]">
