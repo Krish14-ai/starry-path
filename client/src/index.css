@@ -44,7 +44,7 @@
   --popover: 0 0% 100%;
   --popover-foreground: 30 9% 17%;
 
-  --primary: 148 20% 45%;
+  --primary: 148 20% 38%;
   --primary-foreground: 0 0% 100%;
 
   --secondary: 36 24% 92%;
@@ -53,7 +53,7 @@
   --muted: 36 24% 92%;
   --muted-foreground: 30 6% 42%;
 
-  --accent: 148 20% 45%;
+  --accent: 148 20% 38%;
   --accent-foreground: 0 0% 100%;
 
   --destructive: 17 49% 57%;
@@ -62,7 +62,7 @@
   --border: 35 18% 82%;
   --card-border: 35 18% 82%;
   --input: 35 18% 74%;
-  --ring: 148 20% 45%;
+  --ring: 148 20% 38%;
 
   --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     Arial, "Apple Color Emoji", "Segoe UI Emoji";
@@ -81,20 +81,20 @@
   --card-foreground: 30 9% 17%;
   --popover: 0 0% 100%;
   --popover-foreground: 30 9% 17%;
-  --primary: 148 20% 45%;
+  --primary: 148 20% 38%;
   --primary-foreground: 0 0% 100%;
   --secondary: 36 24% 92%;
   --secondary-foreground: 30 9% 17%;
   --muted: 36 24% 92%;
   --muted-foreground: 30 6% 42%;
-  --accent: 148 20% 45%;
+  --accent: 148 20% 38%;
   --accent-foreground: 0 0% 100%;
   --destructive: 17 49% 57%;
   --destructive-foreground: 0 0% 100%;
   --border: 35 18% 82%;
   --card-border: 35 18% 82%;
   --input: 35 18% 74%;
-  --ring: 148 20% 45%;
+  --ring: 148 20% 38%;
 }
 
 @layer base {
@@ -168,20 +168,6 @@
     }
   }
 
-  .floaty {
-    animation: floaty 6.5s ease-in-out infinite;
-  }
-
-  @keyframes floaty {
-    0%,
-    100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-6px);
-    }
-  }
-
   .scribble {
     background: hsl(var(--muted));
   }
@@ -250,21 +236,6 @@
     }
     50% {
       box-shadow: 0 2px 8px rgba(46, 43, 39, 0.08);
-    }
-  }
-
-  .breathe-ring {
-    animation: breatheRing 4s ease-in-out infinite;
-  }
-
-  @keyframes breatheRing {
-    0%, 100% {
-      transform: scale(1);
-      opacity: 0.6;
-    }
-    50% {
-      transform: scale(1.15);
-      opacity: 0.3;
     }
   }
 
@@ -343,8 +314,8 @@
   }
 }
 
-/* Phase 1 visual guardrails: legacy utility classes stay calm while screens migrate. */
-[class*="bg-gradient"] {
+/* Shared visual guardrails: keep legacy screens calm while they migrate. */
+[class*="gradient"] {
   background-image: none !important;
 }
 
@@ -431,4 +402,23 @@
   background-image: none !important;
   backdrop-filter: none !important;
   box-shadow: 0 2px 8px rgba(46, 43, 39, 0.08) !important;
+}
+
+/* Motion is reserved for short fades, slides, and purposeful loading states. */
+.animate-pulse,
+.animate-bounce,
+.floaty,
+.breathe-ring {
+  animation: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }

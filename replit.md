@@ -2,7 +2,7 @@
 
 ## Overview
 
-Orbit is a recovery companion web application designed to help users track their progress in overcoming addictive behaviors. The app features a gentle onboarding flow, daily check-ins, streak tracking with gamification (orbs), a community support section, educational lessons, and a coach messaging feature. The application uses a dark, space-themed UI with glassmorphism design elements.
+Orbit is a recovery companion web application designed to help users track their progress in overcoming addictive behaviors. The app features a gentle onboarding flow, daily check-ins, streak tracking with gamification (orbs), a community support section, educational lessons, and a coach messaging feature. The interface uses a warm light palette, solid cards, clear type hierarchy, and restrained fade/slide motion.
 
 ## Running on Replit
 
@@ -51,7 +51,7 @@ Preferred communication style: Simple, everyday language.
 - **Shared Types**: Types defined in `shared/` directory are shared between client and server
 - **Path Aliases**: `@/` maps to client source, `@shared/` maps to shared modules
 - **Mock Authentication**: Currently uses a mock user ID (1) for MVP development
-- **Glass UI Pattern**: Components use `glass` and `glow` CSS classes for the space-themed aesthetic
+- **Light card UI**: New screens use solid cards, visible borders, warm whitespace, and one restrained accent; legacy `glass`/`glow` utilities are neutralized in the shared stylesheet during migration
 
 ## External Dependencies
 
