@@ -17,28 +17,20 @@ type Slide = {
   title: string;
   body: string;
   icon: any;
-  accent: "violet" | "cyan" | "pink" | "indigo";
+  accent: "sage" | "terracotta";
 };
 
 function OrbIllustration({ accent }: { accent: Slide["accent"] }) {
-  const palette = {
-    violet: "from-violet-400/35 via-fuchsia-400/25 to-cyan-400/20",
-    cyan: "from-cyan-400/35 via-blue-400/25 to-violet-400/20",
-    pink: "from-fuchsia-400/30 via-pink-400/25 to-violet-400/25",
-    indigo: "from-blue-400/30 via-indigo-400/25 to-violet-400/25",
-  }[accent];
+  const orbColor = accent === "terracotta" ? "#C97B5C" : "#5B8A72";
 
   return (
     <div className="relative mx-auto mt-4 h-[148px] w-[148px]" data-testid="img-illustration-orb">
-      <div
-        className={`absolute inset-0 rounded-[44px] bg-gradient-to-br ${palette} blur-2xl`}
-      />
-      <div className="absolute inset-0 rounded-[44px] bg-white/5 ring-1 ring-white/10 shadow-[0_0_0_1px_rgba(130,87,255,0.12),0_18px_80px_rgba(120,80,255,0.35)]" />
-      <div className="absolute inset-[10px] rounded-[36px] bg-gradient-to-br from-white/10 to-white/0 ring-1 ring-white/10" />
-      <div className="absolute inset-[20px] rounded-[28px] bg-black/15 ring-1 ring-white/10" />
-      <div className="absolute left-[40px] top-[44px] h-3 w-3 rounded-full bg-white/80 blur-[0.2px]" />
-      <div className="absolute left-[58px] top-[34px] h-2 w-2 rounded-full bg-white/50" />
-      <div className="absolute right-[38px] bottom-[40px] h-2 w-2 rounded-full bg-cyan-300/60" />
+      <div className="absolute inset-0 rounded-[44px] border border-[#5B8A72]/30 bg-[#5B8A72]/10 shadow-sm" />
+      <div className="absolute inset-[10px] rounded-[36px] border border-[#5B8A72]/35 bg-[#FAF7F2]" />
+      <div className="absolute inset-[20px] rounded-[28px] border border-[#5B8A72]/25 bg-[#E8EEE9]" />
+      <div className="absolute left-[40px] top-[44px] h-3 w-3 rounded-full bg-[#2E2B27]" />
+      <div className="absolute left-[58px] top-[34px] h-2 w-2 rounded-full bg-[#5B8A72]" />
+      <div className="absolute right-[38px] bottom-[40px] h-2 w-2 rounded-full" style={{ backgroundColor: orbColor }} />
     </div>
   );
 }
@@ -76,28 +68,28 @@ export default function Welcome() {
         title: "You\u2019re not alone",
         body: "A calm space that reminds you: relapse doesn\u2019t mean failure. Support is part of the plan.",
         icon: Users,
-        accent: "violet",
+        accent: "sage",
       },
       {
         key: "panic",
         title: "Take back control, instantly",
         body: "One tap opens a fast reset: breathing, grounding, and a short plan to ride the urge wave.",
         icon: ShieldAlert,
-        accent: "cyan",
+        accent: "terracotta",
       },
       {
         key: "progress",
         title: "See progress that feels real",
         body: "Track your streak, collect orbs, and notice the small wins that add up to momentum.",
         icon: Flame,
-        accent: "indigo",
+        accent: "sage",
       },
       {
         key: "coach",
         title: "Your coach, always by your side",
         body: "A friendly, non-judgmental guide that helps you choose your next right action \u2014 not perfection.",
         icon: Sparkles,
-        accent: "pink",
+        accent: "terracotta",
       },
     ],
     [],
