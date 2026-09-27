@@ -14,6 +14,7 @@ import {
   ShieldAlert,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { AppNav } from "@/components/app-nav";
 
 const MESSAGES_KEY = "orbit:coach_messages";
 const ONBOARDING_KEY = "orbit:onboarding";
@@ -162,7 +163,7 @@ export default function CoachPage() {
 
   return (
     <div className="min-h-dvh app-bg text-foreground flex flex-col">
-      <div className="mx-auto w-full max-w-[420px] flex-1 flex flex-col px-4 pt-8 pb-4">
+      <div className="mx-auto w-full max-w-[420px] flex-1 flex flex-col px-4 pt-8 pb-28">
         <header className="flex items-center justify-between mb-6">
           <button
             onClick={() => navigate("/home")}
@@ -313,6 +314,7 @@ export default function CoachPage() {
           </footer>
         </div>
       </div>
+      <AppNav />
     </div>
   );
 }

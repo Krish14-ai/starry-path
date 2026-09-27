@@ -18,6 +18,7 @@ import {
   Target,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { AppNav } from "@/components/app-nav";
 
 const ONBOARDING_KEY = "orbit:onboarding";
 const PROFILE_KEY = "orbit:profile";
@@ -166,7 +167,7 @@ export default function Home() {
 
   return (
     <div className="min-h-dvh app-bg text-foreground">
-      <div className="mx-auto w-full max-w-[420px] px-4 py-8">
+      <div className="mx-auto w-full max-w-[420px] px-4 py-8 pb-28">
         <div className="page-in">
           <div className="flex items-center justify-between">
             <div>
@@ -565,6 +566,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <AppNav />
     </div>
   );
 }

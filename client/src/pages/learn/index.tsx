@@ -15,6 +15,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
+import { AppNav } from "@/components/app-nav";
 
 export const LESSONS = [
   {
@@ -280,7 +281,7 @@ export default function LearnLibrary() {
 
   return (
     <div className="min-h-dvh app-bg text-foreground flex flex-col">
-      <div className="mx-auto w-full max-w-[420px] flex-1 flex flex-col px-4 pt-8 pb-4">
+      <div className="mx-auto w-full max-w-[420px] flex-1 flex flex-col px-4 pt-8 pb-28">
         <header className="flex items-center justify-between mb-8">
           <button
             onClick={() => navigate("/home")}
@@ -313,14 +314,7 @@ export default function LearnLibrary() {
                 {Math.round(percent)}%
               </div>
             </div>
-            <div className="relative h-2.5 w-full bg-white/10 rounded-full overflow-hidden">
-              <motion.div 
-                initial={{ width: 0 }}
-                animate={{ width: `${percent}%` }}
-                transition={{ duration: 1, ease: "easeOut" }}
-                className="absolute top-0 left-0 h-full grad-pill"
-              />
-            </div>
+            <Progress value={percent} className="h-2.5" />
             {completedCount === totalCount && (
               <div className="mt-4 flex items-center gap-2 text-[11px] font-bold text-cyan-400">
                 <Star className="h-3.5 w-3.5 fill-cyan-400" /> All modules complete
@@ -385,6 +379,7 @@ export default function LearnLibrary() {
           </p>
         </footer>
       </div>
+      <AppNav />
     </div>
   );
 }

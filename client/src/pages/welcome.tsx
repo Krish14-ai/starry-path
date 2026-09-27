@@ -20,17 +20,24 @@ type Slide = {
   accent: "sage" | "terracotta";
 };
 
-function OrbIllustration({ accent }: { accent: Slide["accent"] }) {
-  const orbColor = accent === "terracotta" ? "#C97B5C" : "#5B8A72";
-
+function BreathingCircle({ accent }: { accent: Slide["accent"] }) {
+  const accentColor = accent === "terracotta" ? "#C97B5C" : "#5B8A72";
   return (
-    <div className="relative mx-auto mt-4 h-[148px] w-[148px]" data-testid="img-illustration-orb">
-      <div className="absolute inset-0 rounded-[44px] border border-[#5B8A72]/30 bg-[#5B8A72]/10 shadow-sm" />
-      <div className="absolute inset-[10px] rounded-[36px] border border-[#5B8A72]/35 bg-[#FAF7F2]" />
-      <div className="absolute inset-[20px] rounded-[28px] border border-[#5B8A72]/25 bg-[#E8EEE9]" />
-      <div className="absolute left-[40px] top-[44px] h-3 w-3 rounded-full bg-[#2E2B27]" />
-      <div className="absolute left-[58px] top-[34px] h-2 w-2 rounded-full bg-[#5B8A72]" />
-      <div className="absolute right-[38px] bottom-[40px] h-2 w-2 rounded-full" style={{ backgroundColor: orbColor }} />
+    <div className="relative mx-auto mt-4 h-[148px] w-[148px]" data-testid="img-illustration-breathing-circle">
+      <div
+        className="breathing-circle__ring absolute inset-0 rounded-full border-2"
+        style={{ borderColor: `${accentColor}66` }}
+      />
+      <div
+        className="breathing-circle absolute inset-[18px] grid place-items-center rounded-full border-2 bg-card"
+        style={{ borderColor: accentColor }}
+      >
+        <div className="text-center text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+          <div>Inhale</div>
+          <div className="mt-1 text-[9px] tracking-[0.12em]">Exhale</div>
+        </div>
+      </div>
+      <div className="absolute inset-[70px] rounded-full" style={{ backgroundColor: accentColor }} />
     </div>
   );
 }
@@ -48,7 +55,7 @@ function PillButton({
     <button
       type="button"
       onClick={onClick}
-      className="grad-pill shine w-full rounded-full px-6 py-5 text-base font-bold tracking-tight text-white transition-all btn-press min-tap"
+      className="w-full rounded-xl bg-primary px-6 py-5 text-base font-bold tracking-tight text-primary-foreground elevation-1 transition-all btn-press min-tap"
       data-testid={testId}
     >
       <span className="inline-flex items-center justify-center gap-2">
@@ -123,7 +130,7 @@ export default function Welcome() {
 
             <button
               type="button"
-              className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white/80 transition hover:bg-white/10"
+              className="rounded-xl border border-border bg-card px-3 py-2 text-xs font-semibold text-foreground elevation-1 transition hover:bg-secondary"
               onClick={() => navigate("/home")}
               data-testid="button-skip-to-home"
             >
@@ -131,7 +138,7 @@ export default function Welcome() {
             </button>
           </div>
 
-          <Card className="glass glow mt-6 overflow-hidden fade-up">
+          <Card className="mt-6 overflow-hidden fade-up elevation-1">
             <CardContent className="p-6">
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
@@ -151,7 +158,7 @@ export default function Welcome() {
 
                 <div className="shrink-0">
                   <div
-                    className="grid h-12 w-12 place-items-center rounded-2xl bg-white/5 ring-1 ring-white/10"
+                    className="grid h-12 w-12 place-items-center rounded-xl border border-border bg-secondary"
                     data-testid={`icon-welcome-${active.key}`}
                   >
                     <Icon className="h-6 w-6 text-white/85" strokeWidth={1.8} />
@@ -167,8 +174,8 @@ export default function Welcome() {
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.35, ease: [0.2, 0.9, 0.2, 1] }}
                 >
-                  <div className="floaty">
-                    <OrbIllustration accent={active.accent} />
+                    <div>
+                      <BreathingCircle accent={active.accent} />
                   </div>
                 </motion.div>
               </AnimatePresence>
@@ -189,8 +196,8 @@ export default function Welcome() {
                     onClick={() => setIndex(i)}
                     className={`h-2.5 w-8 rounded-full transition-all duration-300 ${
                       i === index
-                        ? "bg-white/80 shadow-[0_0_12px_rgba(255,255,255,0.4)]"
-                        : "bg-white/15 hover:bg-white/25"
+                        ? "bg-primary elevation-1"
+                        : "bg-muted hover:bg-secondary"
                     }`}
                     data-testid={`button-welcome-dot-${s.key}`}
                     aria-label={`Go to ${s.key}`}
@@ -213,7 +220,7 @@ export default function Welcome() {
                   />
                 )}
 
-                <div className="glass rounded-3xl border border-white/10 bg-white/5 p-4" data-testid="card-paywall-teaser">
+                <div className="rounded-2xl border border-border bg-secondary p-4 elevation-1" data-testid="card-paywall-teaser">
                   <div className="flex items-center justify-between gap-3">
                     <div className="min-w-0">
                       <div className="text-xs font-semibold tracking-[0.18em] text-white/60" data-testid="text-paywall-kicker">
@@ -259,7 +266,7 @@ export default function Welcome() {
             <button
               type="button"
               onClick={() => navigate("/onboarding")}
-              className="w-full rounded-full border border-white/10 bg-white/5 px-5 py-4 text-sm font-semibold text-white/85 transition hover:bg-white/10 active:scale-[0.99]"
+              className="w-full rounded-xl border border-border bg-card px-5 py-4 text-sm font-semibold text-foreground elevation-1 transition hover:bg-secondary active:scale-[0.99]"
               data-testid="button-welcome-skip"
             >
               Skip intro

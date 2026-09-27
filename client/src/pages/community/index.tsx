@@ -20,6 +20,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AppNav } from "@/components/app-nav";
 
 const STORAGE_KEY = "orbit:community_v1";
 
@@ -257,7 +258,7 @@ export default function CommunityPage() {
 
   return (
     <div className="min-h-dvh app-bg text-foreground flex flex-col">
-      <div className="mx-auto w-full max-w-[420px] flex-1 flex flex-col px-4 pt-8 pb-4">
+      <div className="mx-auto w-full max-w-[420px] flex-1 flex flex-col px-4 pt-8 pb-28">
         <header className="flex items-center justify-between mb-6">
           <button
             onClick={() => navigate("/home")}
@@ -514,6 +515,7 @@ export default function CommunityPage() {
           </p>
         </footer>
       </div>
+      <AppNav />
     </div>
   );
 }

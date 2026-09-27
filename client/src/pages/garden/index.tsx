@@ -20,6 +20,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { AppNav } from "@/components/app-nav";
 
 const STREAK_KEY = "orbit:streak";
 const ORBS_KEY = "orbit:orbs";
@@ -212,7 +213,7 @@ export default function SeedGarden() {
     <div className="min-h-dvh app-bg text-foreground flex flex-col relative overflow-hidden">
       <StarField />
 
-      <div className="mx-auto w-full max-w-[420px] flex-1 flex flex-col px-4 pt-8 pb-4 relative z-10">
+      <div className="mx-auto w-full max-w-[420px] flex-1 flex flex-col px-4 pt-8 pb-28 relative z-10">
         <header className="flex items-center justify-between mb-8">
           <button
             onClick={() => navigate("/home")}
@@ -249,18 +250,12 @@ export default function SeedGarden() {
                 <span className="text-[10px] font-black uppercase tracking-widest text-white/30">Stage: {currentStage.name}</span>
                 <span className="text-[10px] font-black uppercase tracking-widest text-cyan-400">{daysToNext} days to next phase</span>
               </div>
-              <div className="h-3 w-full bg-white/5 rounded-full overflow-hidden border border-white/10 relative">
+              <div className="h-2 w-full overflow-hidden rounded-full bg-muted relative">
                 <motion.div 
                   initial={{ width: 0 }}
-                  animate={{ 
-                    width: `${progress}%`,
-                    boxShadow: ["0 0 10px rgba(34,211,238,0.2)", "0 0 20px rgba(34,211,238,0.6)", "0 0 10px rgba(34,211,238,0.2)"]
-                  }}
-                  transition={{ 
-                    width: { duration: 1.5, ease: "easeOut" },
-                    boxShadow: { duration: 2, repeat: Infinity }
-                  }}
-                  className="absolute top-0 left-0 h-full bg-gradient-to-r from-green-500 to-cyan-500 shadow-[0_0_15px_rgba(34,211,238,0.4)]"
+                  animate={{ width: `${progress}%` }}
+                  transition={{ width: { duration: 1.5, ease: "easeOut" } }}
+                  className="absolute left-0 top-0 h-full rounded-full bg-primary"
                 />
               </div>
             </Card>
@@ -336,6 +331,7 @@ export default function SeedGarden() {
           </p>
         </footer>
       </div>
+      <AppNav />
     </div>
   );
 }
