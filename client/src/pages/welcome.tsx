@@ -115,13 +115,13 @@ export default function Welcome() {
           <div className="flex items-center justify-between">
             <div>
               <div
-                className="text-xs font-medium tracking-[0.22em] text-white/60"
+                className="text-xs font-medium tracking-[0.22em] text-muted-foreground"
                 data-testid="text-welcome-brand"
               >
                 ORBIT
               </div>
               <div
-                className="mt-1 text-sm text-white/70"
+                className="mt-1 text-sm text-muted-foreground"
                 data-testid="text-welcome-tagline"
               >
                 Recovery companion prototype
@@ -143,13 +143,13 @@ export default function Welcome() {
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
                   <h1
-                    className="font-[var(--font-serif)] text-[34px] leading-[1.05] text-white"
+                    className="font-[var(--font-sans)] text-[34px] font-semibold leading-[1.05] text-foreground"
                     data-testid={`text-welcome-title-${active.key}`}
                   >
                     {active.title}
                   </h1>
                   <p
-                    className="mt-3 text-[14px] leading-relaxed text-white/70"
+                    className="mt-3 text-[14px] leading-relaxed text-muted-foreground"
                     data-testid={`text-welcome-body-${active.key}`}
                   >
                     {active.body}
@@ -161,7 +161,7 @@ export default function Welcome() {
                     className="grid h-12 w-12 place-items-center rounded-xl border border-border bg-secondary"
                     data-testid={`icon-welcome-${active.key}`}
                   >
-                    <Icon className="h-6 w-6 text-white/85" strokeWidth={1.8} />
+                    <Icon className="h-6 w-6 text-primary" strokeWidth={1.8} />
                   </div>
                 </div>
               </div>
@@ -181,11 +181,11 @@ export default function Welcome() {
               </AnimatePresence>
 
               <div className="mt-6">
-                <div className="mb-3 flex items-center justify-between text-xs text-white/60">
+                <div className="mb-3 flex items-center justify-between text-xs text-muted-foreground">
                   <span data-testid="text-welcome-progress">Step {index + 1} of 4</span>
                   <span data-testid="text-welcome-progress-percent">{Math.round(progress)}%</span>
                 </div>
-                <Progress value={progress} data-testid="progress-welcome" />
+                <Progress value={progress} className="h-1.5" data-testid="progress-welcome" />
               </div>
 
               <div className="mt-6 flex gap-2 justify-center" data-testid="group-welcome-dots">
@@ -223,13 +223,13 @@ export default function Welcome() {
                 <div className="rounded-2xl border border-border bg-secondary p-4 elevation-1" data-testid="card-paywall-teaser">
                   <div className="flex items-center justify-between gap-3">
                     <div className="min-w-0">
-                      <div className="text-xs font-semibold tracking-[0.18em] text-white/60" data-testid="text-paywall-kicker">
+                      <div className="text-xs font-semibold tracking-[0.18em] text-muted-foreground" data-testid="text-paywall-kicker">
                         PREMIUM TEASER
                       </div>
-                      <div className="mt-1 text-sm font-semibold text-white" data-testid="text-paywall-headline">
+                      <div className="mt-1 text-sm font-semibold text-foreground" data-testid="text-paywall-headline">
                         Loved by thousands
                       </div>
-                      <div className="mt-1 text-xs text-white/70" data-testid="text-paywall-subcopy">
+                      <div className="mt-1 text-xs text-muted-foreground" data-testid="text-paywall-subcopy">
                         Unlock deeper insights, guided resets, and personalized routines.\n                        (UI only \u2014 no payments yet.)
                       </div>
                     </div>
@@ -245,10 +245,10 @@ export default function Welcome() {
                           />
                         ))}
                       </div>
-                      <div className="mt-1 text-sm font-semibold text-white" data-testid="text-rating">
+                      <div className="mt-1 text-sm font-semibold text-foreground" data-testid="text-rating">
                         4.8
                       </div>
-                      <div className="text-[11px] text-white/60" data-testid="text-rating-note">
+                      <div className="text-[11px] text-muted-foreground" data-testid="text-rating-note">
                         Rated highly
                       </div>
                     </div>
@@ -256,7 +256,7 @@ export default function Welcome() {
                 </div>
               </div>
 
-              <p className="mt-4 text-[11px] leading-relaxed text-white/55" data-testid="text-welcome-disclaimer">
+              <p className="mt-4 text-[11px] leading-relaxed text-muted-foreground" data-testid="text-welcome-disclaimer">
                 This prototype is for support and self-improvement. It\u2019s not medical advice or a substitute for professional care.
               </p>
             </CardContent>
