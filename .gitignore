@@ -8,3 +8,9 @@ vite.config.ts.*
 .env
 .env.local
 .env.*.local
+
+# Android - build outputs & machine-specific files
+android-twa/local.properties
+android-twa/.gradle/
+android-twa/app/build/
+android-twa/build/
